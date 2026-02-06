@@ -106,6 +106,10 @@ struct StreamView: View {
       set: { if !$0 { geminiVM.errorMessage = nil } }
     )) {
       Button("OK") { geminiVM.errorMessage = nil }
+      Button("Change API Key") {
+        geminiVM.errorMessage = nil
+        geminiVM.showApiKeyPrompt = true
+      }
     } message: {
       Text(geminiVM.errorMessage ?? "")
     }
@@ -135,7 +139,7 @@ struct ControlsView: View {
         viewModel.capturePhoto()
       }
 
-      // Gemini AI button
+      // Gemini AI button (long-press to change API key)
       CircleButton(
         icon: geminiVM.isGeminiActive ? "waveform.circle.fill" : "waveform.circle",
         text: "AI"
@@ -147,6 +151,9 @@ struct ControlsView: View {
             await geminiVM.startSession()
           }
         }
+      }
+      .onLongPressGesture {
+        geminiVM.showApiKeyPrompt = true
       }
     }
   }
