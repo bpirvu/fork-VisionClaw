@@ -10,6 +10,7 @@ class GeminiSessionViewModel: ObservableObject {
   @Published var userTranscript: String = ""
   @Published var aiTranscript: String = ""
   @Published var toolCallStatus: ToolCallStatus = .idle
+  @Published var openClawConnectionState: OpenClawConnectionState = .notConfigured
   private let geminiService = GeminiLiveService()
   private let openClawBridge = OpenClawBridge()
   private var toolCallRouter: ToolCallRouter?
@@ -81,7 +82,8 @@ class GeminiSessionViewModel: ObservableObject {
       }
     }
 
-    // New OpenClaw session per Gemini session (fresh context, no stale memory)
+    // Check OpenClaw connectivity and start fresh session
+    await openClawBridge.checkConnection()
     openClawBridge.resetSession()
 
     // Wire tool call handling
@@ -114,6 +116,7 @@ class GeminiSessionViewModel: ObservableObject {
         self.connectionState = self.geminiService.connectionState
         self.isModelSpeaking = self.geminiService.isModelSpeaking
         self.toolCallStatus = self.openClawBridge.lastToolCallStatus
+        self.openClawConnectionState = self.openClawBridge.connectionState
       }
     }
 

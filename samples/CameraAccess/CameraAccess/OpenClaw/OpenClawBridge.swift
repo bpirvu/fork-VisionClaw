@@ -1,17 +1,58 @@
 import Foundation
 
+enum OpenClawConnectionState: Equatable {
+  case notConfigured
+  case checking
+  case connected
+  case unreachable(String)
+}
+
 @MainActor
 class OpenClawBridge: ObservableObject {
   @Published var lastToolCallStatus: ToolCallStatus = .idle
+  @Published var connectionState: OpenClawConnectionState = .notConfigured
 
   private let session: URLSession
+  private let pingSession: URLSession
   private var sessionKey: String
 
   init() {
     let config = URLSessionConfiguration.default
     config.timeoutIntervalForRequest = 120
     self.session = URLSession(configuration: config)
+
+    let pingConfig = URLSessionConfiguration.default
+    pingConfig.timeoutIntervalForRequest = 5
+    self.pingSession = URLSession(configuration: pingConfig)
+
     self.sessionKey = OpenClawBridge.newSessionKey()
+  }
+
+  func checkConnection() async {
+    guard GeminiConfig.isOpenClawConfigured else {
+      connectionState = .notConfigured
+      return
+    }
+    connectionState = .checking
+    guard let url = URL(string: "\(GeminiConfig.openClawHost):\(GeminiConfig.openClawPort)/v1/chat/completions") else {
+      connectionState = .unreachable("Invalid URL")
+      return
+    }
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue("Bearer \(GeminiConfig.openClawGatewayToken)", forHTTPHeaderField: "Authorization")
+    do {
+      let (_, response) = try await pingSession.data(for: request)
+      if let http = response as? HTTPURLResponse, (200...499).contains(http.statusCode) {
+        connectionState = .connected
+        NSLog("[OpenClaw] Gateway reachable (HTTP %d)", http.statusCode)
+      } else {
+        connectionState = .unreachable("Unexpected response")
+      }
+    } catch {
+      connectionState = .unreachable(error.localizedDescription)
+      NSLog("[OpenClaw] Gateway unreachable: %@", error.localizedDescription)
+    }
   }
 
   func resetSession() {
