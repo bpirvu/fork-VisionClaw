@@ -104,6 +104,14 @@
       const code = document.getElementById('room-input').value.toUpperCase().trim();
       if (code.length !== 6) return;
 
+      // Clean up any previous session
+      if (pc) { pc.close(); pc = null; }
+      if (ws) { ws.close(); ws = null; }
+      if (localStream) {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+      }
+
       ws = new WebSocket(wsUrl);
       const sock = ws;
       ws.onopen = () => {
@@ -150,6 +158,8 @@
           break;
 
         case 'peer_left':
+          if (pc) { pc.close(); pc = null; }
+          document.getElementById('remote-video').srcObject = null;
           setStatus('Stream ended', 'disconnected');
           showControls(false);
           break;
@@ -162,6 +172,9 @@
     }
 
     async function setupPeerConnection() {
+      // Close any existing peer connection
+      if (pc) { pc.close(); pc = null; }
+
       // Fetch TURN credentials for NAT traversal across networks
       let iceServers = [
         { urls: 'stun:stun.l.google.com:19302' },
