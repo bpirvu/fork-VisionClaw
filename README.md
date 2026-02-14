@@ -67,10 +67,16 @@ open CameraAccess.xcodeproj
 
 Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey).
 
-Open `samples/CameraAccess/CameraAccess/Gemini/GeminiConfig.swift` and replace the placeholder:
+Create a local secrets file from the template:
+
+```bash
+cp samples/CameraAccess/CameraAccess/Secrets.swift.example samples/CameraAccess/CameraAccess/Secrets.swift
+```
+
+Then open `samples/CameraAccess/CameraAccess/Secrets.swift` and replace the placeholder:
 
 ```swift
-static let apiKey = "YOUR_GEMINI_API_KEY"  // <-- paste your key here
+static let geminiAPIKey = "YOUR_GEMINI_API_KEY"  // <-- paste your key here
 ```
 
 ### 3. Build and run
@@ -135,7 +141,7 @@ Key settings:
 
 ### 2. Configure the iOS app
 
-In `GeminiConfig.swift`, update the OpenClaw settings:
+In `CameraAccess/Secrets.swift`, update the OpenClaw settings:
 
 ```swift
 static let openClawHost = "http://Your-Mac.local"           // your Mac's Bonjour hostname
@@ -167,7 +173,8 @@ All source code is in `samples/CameraAccess/CameraAccess/`:
 
 | File | Purpose |
 |------|---------|
-| `Gemini/GeminiConfig.swift` | API keys, model config, system prompt |
+| `Secrets.swift` (local, gitignored) | API keys and local OpenClaw tokens/host |
+| `Gemini/GeminiConfig.swift` | Model config, system prompt, secret wiring |
 | `Gemini/GeminiLiveService.swift` | WebSocket client for Gemini Live API |
 | `Gemini/AudioManager.swift` | Mic capture (PCM 16kHz) + audio playback (PCM 24kHz) |
 | `Gemini/GeminiSessionViewModel.swift` | Session lifecycle, tool call wiring, transcript state |
@@ -210,9 +217,9 @@ Gemini Live supports function calling. This app declares a single `execute` tool
 
 ## Troubleshooting
 
-**"Gemini API key not configured"** -- Open `GeminiConfig.swift` and add your API key.
+**"Gemini API key not configured"** -- Open `CameraAccess/Secrets.swift` and add your API key.
 
-**OpenClaw connection timeout** -- Make sure your iPhone and Mac are on the same Wi-Fi network, the gateway is running (`openclaw gateway restart`), and the hostname in `GeminiConfig.swift` matches your Mac's Bonjour name.
+**OpenClaw connection timeout** -- Make sure your iPhone and Mac are on the same Wi-Fi network, the gateway is running (`openclaw gateway restart`), and the hostname in `CameraAccess/Secrets.swift` matches your Mac's Bonjour name.
 
 **Echo/feedback in iPhone mode** -- The app mutes the mic while the AI is speaking. If you still hear echo, try turning down the volume.
 
