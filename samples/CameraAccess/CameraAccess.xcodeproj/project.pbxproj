@@ -27,6 +27,8 @@
 		8FFD60602E84A2F70035E446 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD605F2E84A2F70035E446 /* MainAppView.swift */; };
 		8FFD60612E84A2F70035E446 /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD605E2E84A2F70035E446 /* DebugMenuView.swift */; };
 		9DD6CAAF2F3C426600ED7098 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6CAAD2F3C426600ED7098 /* Secrets.swift */; };
+		9DD894B22F4047630090B9B9 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD894AF2F4047630090B9B9 /* SettingsManager.swift */; };
+		9DD894B32F4047630090B9B9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD894B02F4047630090B9B9 /* SettingsView.swift */; };
 		A1B2C3D42F0A000200000001 /* GeminiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000001 /* GeminiConfig.swift */; };
 		A1B2C3D42F0A000200000002 /* GeminiLiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000002 /* GeminiLiveService.swift */; };
 		A1B2C3D42F0A000200000003 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000003 /* AudioManager.swift */; };
@@ -86,6 +88,8 @@
 		8FFD605F2E84A2F70035E446 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		9DD6CAAD2F3C426600ED7098 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		9DD6CAAE2F3C426600ED7098 /* Secrets.swift.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.swift.example; sourceTree = "<group>"; };
+		9DD894AF2F4047630090B9B9 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		9DD894B02F4047630090B9B9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000001 /* GeminiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiConfig.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000002 /* GeminiLiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiLiveService.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000003 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 		8FD96B7D2E6F0A9800F56AB1 /* CameraAccess */ = {
 			isa = PBXGroup;
 			children = (
+				9DD894B12F4047630090B9B9 /* Settings */,
 				9DD6CAAD2F3C426600ED7098 /* Secrets.swift */,
 				9DD6CAAE2F3C426600ED7098 /* Secrets.swift.example */,
 				9D3C69602F367CF700E641A5 /* iPhone */,
@@ -211,6 +216,15 @@
 				8FFD602A2E8433E20035E446 /* MockDeviceViewModel.swift */,
 			);
 			path = MockDeviceKit;
+			sourceTree = "<group>";
+		};
+		9DD894B12F4047630090B9B9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9DD894AF2F4047630090B9B9 /* SettingsManager.swift */,
+				9DD894B02F4047630090B9B9 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		A1B2C3D42F0A000300000001 /* Gemini */ = {
@@ -371,6 +385,8 @@
 				A1B2C3D42F0A000200000002 /* GeminiLiveService.swift in Sources */,
 				A1B2C3D42F0A000200000003 /* AudioManager.swift in Sources */,
 				A1B2C3D42F0A000200000004 /* GeminiSessionViewModel.swift in Sources */,
+				9DD894B22F4047630090B9B9 /* SettingsManager.swift in Sources */,
+				9DD894B32F4047630090B9B9 /* SettingsView.swift in Sources */,
 				A1B2C3D42F0A000200000005 /* GeminiOverlayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
